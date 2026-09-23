@@ -32,14 +32,10 @@ public class DataAnalysis {
 
     /**
      * Returns the number of distinct users who viewed at least one video at a timestamp `t` with
-     * `start <= t <= end`.
-     */
+     * `start <= t <= end`. This method has an overall worst-case runtime complexity of O(N log N).
+     *  */
     @SuppressWarnings("SameParameterValue")
     static int countDistinctUsersInTimeInterval(View[] views, LocalDateTime start, LocalDateTime end) {
-        // TODO 5: Implement this method according to its specifications. Your definition must use
-        //  the `binarySearch()`, `copyOfRange()`, and/or `deduplicatingSort()` methods of the
-        //  `DataUtilities` class to manipulate the array data. You may not directly access the
-        //  array contents. Label each line of with its worst-case runtime complexity.
         View[] byTimestamp = deduplicatingSort(views, BY_TIMESTAMP, KEEP_ALL); // O(N log N)
         View startKey = new View(null, null, start); // O(1)
         int first = binarySearch(byTimestamp, startKey, BY_TIMESTAMP, LEFT); // O(log N)
@@ -61,13 +57,10 @@ public class DataAnalysis {
      * for each videoID `v1` in this array, if this user viewed `v2` strictly after `v1`, then a
      * view of `v2` will also be present in the array. If `userID` has viewed fewer than `k`
      * distinct videos, then a shorter array containing their latest View of each video is returned.
+     * This method has an overall worst-case runtime complexity of O(N log N).
      */
     @SuppressWarnings("SameParameterValue")
     static View[] lastKViewedByUser(View[] views, String userID, int k) {
-        // TODO 6: Implement this method according to its specifications. Your definition must use
-        //  the `binarySearch()`, `copyOfRange()`, and/or `deduplicatingSort()` methods of the
-        //  `DataUtilities` class to manipulate the array data. You may not directly access the array
-        //  contents. Label each line of your definition with its worst-case runtime complexity.
         View[] byUserID = deduplicatingSort(views, BY_USER_ID, KEEP_ALL); // O(N log N)
         View userKey = new View(userID, null, null); // O(1)
         int first = binarySearch(byUserID, userKey, BY_USER_ID, LEFT); // O(log N)
@@ -94,12 +87,10 @@ public class DataAnalysis {
      */
     @SuppressWarnings("SameParameterValue")
     static String mostObsessedViewer(View[] views, String videoID) {
-        // TODO 7: Implement this method according to its specifications. Make sure to add a comment
-        //  documenting the invariant of each loop that you write. Your definition must have a
-        //  worst-case runtime complexity of `O(N + M log M)`, where `N = views.length` and `M` is
-        //  the number of entries of `views` with the given `videoID`.
         View[] posMatches = new View[views.length];
         int numViews = 0;
+        // Invariant: posMatches[0..numViews) contains exactly the entries of views[0..i)
+        // whose videoID equals the given videoID, in their original relative order.
         for (int i = 0; i < views.length; i++) {
             String thisVideoID = views[i].videoID();
             if (thisVideoID.equals(videoID)) {
@@ -116,6 +107,9 @@ public class DataAnalysis {
         String currentUser = matchByUser[0].userID();
         int bestRun = currentRun;
         String bestUser = currentUser;
+        // Invariant: bestUser/bestRun hold the userID and length of the longest run
+        // found among matchByUser[0..j), and currentUser/currentRun hold the userID
+        // and length of the run currently in progress, ending at matchByUser[j-1].
         for (int j = 1; j < matchByUser.length; j++) {
             if (matchByUser[j].userID().equals(currentUser)) {
                 currentRun++;
