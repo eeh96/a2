@@ -1,8 +1,8 @@
 Assignment 2: Analyzing Video View Data
 
-Assignment completion time (rounded to nearest hour): 
+Assignment completion time (9):
 
-[x] the appropriate choice: [] Worked alone   [] Completed with a partner
+[x] the appropriate choice: [] Worked alone   [x] Completed with a partner
 
 Partner 1:
   Name: Emmet Hand
@@ -15,7 +15,8 @@ Partner 2:
 If you worked with a partner, use the space below to describe your collaboration.
 Where/when did you work on the assignment? Who took the lead on different parts? 
 
-
+We split up the work between us again. IT was split evenly through the methods and went to each other for help if it was needed. We found this to be the best form of
+teamwork and efficiency for this project and for us since our schedules slightly differ.
 
 
 
